@@ -1,0 +1,402 @@
+export const motivationalQuotes = [
+  "The future belongs to those who believe in the beauty of their dreams.",
+  "Success is the sum of small efforts, repeated day in and day out.",
+  "Don't watch the clock; do what it does. Keep going.",
+  "The only way to do great work is to love what you do.",
+  "Education is the passport to the future.",
+  "Your limitation—it's only your imagination.",
+  "Push yourself, because no one else is going to do it for you.",
+  "Great things never come from comfort zones.",
+  "Dream it. Wish it. Do it.",
+  "Success doesn't just find you. You have to go out and get it.",
+];
+
+export const sampleAssignments = [
+  {
+    id: '1',
+    title: 'Data Structures Assignment',
+    subject: 'Computer Science',
+    dueDate: '2026-06-25',
+    status: 'in_progress',
+    priority: 'high',
+  },
+  {
+    id: '2',
+    title: 'Software Design Patterns Report',
+    subject: 'Software Engineering',
+    dueDate: '2026-06-28',
+    status: 'pending',
+    priority: 'medium',
+  },
+  {
+    id: '3',
+    title: 'Linear Algebra Problem Set',
+    subject: 'Mathematics',
+    dueDate: '2026-06-24',
+    status: 'in_progress',
+    priority: 'high',
+  },
+  {
+    id: '4',
+    title: 'Database Normalization Exercise',
+    subject: 'Computer Science',
+    dueDate: '2026-06-30',
+    status: 'pending',
+    priority: 'medium',
+  },
+];
+
+export const sampleStudyPlans = [
+  {
+    id: '1',
+    title: 'Algorithm Revision',
+    subject: 'Computer Science',
+    time: '9:00 AM - 11:00 AM',
+    duration: '2 hours',
+    completed: false,
+  },
+  {
+    id: '2',
+    title: 'OOP Concepts Practice',
+    subject: 'Software Engineering',
+    time: '2:00 PM - 4:00 PM',
+    duration: '2 hours',
+    completed: true,
+  },
+  {
+    id: '3',
+    title: 'Calculus Problem Solving',
+    subject: 'Mathematics',
+    time: '5:00 PM - 6:30 PM',
+    duration: '1.5 hours',
+    completed: false,
+  },
+];
+
+export const sampleFlashcards = [
+  {
+    id: '1',
+    front: 'What is Big O notation?',
+    back: "Big O notation describes the performance or complexity of an algorithm. It tells you how much an algorithm's runtime or space requirements grow relative to the input size.",
+    subject: 'Computer Science',
+    mastered: false,
+  },
+  {
+    id: '2',
+    front: 'Derivative of sin(x)',
+    back: 'cos(x)',
+    subject: 'Mathematics',
+    mastered: true,
+  },
+  {
+    id: '3',
+    front: 'SOLID Principles',
+    back: 'Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.',
+    subject: 'Software Engineering',
+    mastered: false,
+  },
+  {
+    id: '4',
+    front: 'What is a Binary Search Tree?',
+    back: 'A binary tree where each node has at most two children, and for each node, all values in the left subtree are less than the node, and all values in the right subtree are greater.',
+    subject: 'Computer Science',
+    mastered: false,
+  },
+];
+
+export const sampleQuizzes = [
+  {
+    id: '1',
+    title: 'Data Structures Basics',
+    subject: 'Computer Science',
+    questions: 10,
+    score: 8,
+    total: 10,
+    date: '2026-06-20',
+  },
+  {
+    id: '2',
+    title: 'Calculus Fundamentals',
+    subject: 'Mathematics',
+    questions: 15,
+    score: 12,
+    total: 15,
+    date: '2026-06-19',
+  },
+  {
+    id: '3',
+    title: 'Software Design Patterns',
+    subject: 'Software Engineering',
+    questions: 20,
+    score: 18,
+    total: 20,
+    date: '2026-06-18',
+  },
+];
+
+export const sampleNotes = [
+  {
+    id: '1',
+    title: 'Data Structures Notes',
+    content: 'Data structures are ways of organizing and storing data in a computer so that it can be accessed and modified efficiently. Common data structures include arrays, linked lists, stacks, queues, trees, and graphs. Arrays provide O(1) access but O(n) insertion. Linked lists provide O(1) insertion but O(n) access. Trees enable hierarchical data representation with efficient search operations. Hash tables provide O(1) average case lookup using key-value pairs.',
+    subject: 'Computer Science',
+    date: '2026-06-20',
+    simplified: false,
+  },
+  {
+    id: '2',
+    title: 'Software Design Patterns',
+    content: 'Design patterns are reusable solutions to common software design problems. The Singleton pattern ensures a class has only one instance. The Factory pattern creates objects without specifying the exact class. The Observer pattern defines a one-to-many dependency between objects. The Strategy pattern defines a family of algorithms and makes them interchangeable. MVC separates data, UI, and control logic.',
+    subject: 'Software Engineering',
+    date: '2026-06-19',
+    simplified: false,
+  },
+];
+
+export const sampleCareers = [
+  {
+    id: '1',
+    title: 'Software Engineer',
+    category: 'Technology',
+    skills: ['JavaScript', 'React', 'Node.js', 'Git', 'System Design'],
+    certifications: ['AWS Certified Developer', 'Meta Frontend'],
+    outlook: 'Strong growth, 25% increase projected',
+    salary: '$80,000 - $150,000',
+  },
+  {
+    id: '2',
+    title: 'Data Scientist',
+    category: 'Technology',
+    skills: ['Python', 'Statistics', 'Machine Learning', 'SQL'],
+    certifications: ['Google Data Analytics', 'IBM Data Science'],
+    outlook: 'High demand, 35% growth expected',
+    salary: '$95,000 - $165,000',
+  },
+  {
+    id: '3',
+    title: 'DevOps Engineer',
+    category: 'Technology',
+    skills: ['Docker', 'Kubernetes', 'CI/CD', 'Cloud', 'Linux'],
+    certifications: ['AWS Certified DevOps', 'CKA'],
+    outlook: 'Critical role, 30% growth projected',
+    salary: '$90,000 - $160,000',
+  },
+  {
+    id: '4',
+    title: 'AI/ML Engineer',
+    category: 'Technology',
+    skills: ['Python', 'TensorFlow', 'PyTorch', 'Deep Learning'],
+    certifications: ['Google ML Engineer', 'AWS ML Specialty'],
+    outlook: 'Explosive growth in AI sector',
+    salary: '$100,000 - $180,000',
+  },
+];
+
+export const sampleAnalytics = {
+  studyHours: [
+    { day: 'Mon', hours: 3.5 },
+    { day: 'Tue', hours: 4.2 },
+    { day: 'Wed', hours: 2.8 },
+    { day: 'Thu', hours: 5.1 },
+    { day: 'Fri', hours: 3.9 },
+    { day: 'Sat', hours: 6.2 },
+    { day: 'Sun', hours: 4.5 },
+  ],
+  weeklyProgress: [
+    { week: 'Week 1', completed: 85 },
+    { week: 'Week 2', completed: 72 },
+    { week: 'Week 3', completed: 90 },
+    { week: 'Week 4', completed: 78 },
+  ],
+  subjectDistribution: [
+    { subject: 'CS', hours: 18 },
+    { subject: 'Math', hours: 12 },
+    { subject: 'SE', hours: 10 },
+    { subject: 'DB', hours: 8 },
+    { subject: 'AI', hours: 6 },
+  ],
+  totalStudyHours: 142,
+  completedTasks: 87,
+  quizAverage: 82,
+  flashcardsReviewed: 340,
+  currentStreak: 12,
+  longestStreak: 28,
+};
+
+export const badges = [
+  { id: '1', name: 'First Steps', description: 'Complete your first study session', icon: 'footprints', unlocked: true },
+  { id: '2', name: 'Week Warrior', description: 'Study 7 days in a row', icon: 'flame', unlocked: true },
+  { id: '3', name: 'Quiz Master', description: 'Score 90% on a quiz', icon: 'trophy', unlocked: true },
+  { id: '4', name: 'Flashcard Fanatic', description: 'Review 100 flashcards', icon: 'layers', unlocked: false },
+  { id: '5', name: 'Assignment Ace', description: 'Complete 10 assignments', icon: 'check-circle', unlocked: true },
+  { id: '6', name: 'Month Master', description: 'Study 30 days in a row', icon: 'calendar', unlocked: false },
+  { id: '7', name: 'Note Ninja', description: 'Simplify 20 notes with AI', icon: 'file-text', unlocked: false },
+  { id: '8', name: 'Career Explorer', description: 'Explore 5 career paths', icon: 'compass', unlocked: false },
+];
+
+export const features = [
+  {
+    id: 'assignments',
+    title: 'Assignment Assistant',
+    description: 'Get help with outlines, research, and drafts',
+    icon: 'file-text',
+    color: '#6366F1',
+    gradient: ['#6366F1', '#818CF8'] as const,
+  },
+  {
+    id: 'presentations',
+    title: 'Presentation Builder',
+    description: 'Create structured slide decks with AI',
+    icon: 'monitor',
+    color: '#14B8A6',
+    gradient: ['#14B8A6', '#2DD4BF'] as const,
+  },
+  {
+    id: 'planner',
+    title: 'Study Planner',
+    description: 'Build personalized study schedules',
+    icon: 'calendar',
+    color: '#F97316',
+    gradient: ['#F97316', '#FB923C'] as const,
+  },
+  {
+    id: 'tutor',
+    title: 'AI Tutor',
+    description: 'Ask questions and get explanations',
+    icon: 'message-circle',
+    color: '#8B5CF6',
+    gradient: ['#8B5CF6', '#A78BFA'] as const,
+  },
+  {
+    id: 'quiz',
+    title: 'Quiz Generator',
+    description: 'Generate quizzes from any topic',
+    icon: 'help-circle',
+    color: '#EF4444',
+    gradient: ['#EF4444', '#F87171'] as const,
+  },
+  {
+    id: 'flashcards',
+    title: 'Flashcards',
+    description: 'Create and review flashcards',
+    icon: 'layers',
+    color: '#10B981',
+    gradient: ['#10B981', '#34D399'] as const,
+  },
+  {
+    id: 'notes',
+    title: 'Notes Simplifier',
+    description: 'Simplify and summarize notes',
+    icon: 'scissors',
+    color: '#F59E0B',
+    gradient: ['#F59E0B', '#FBBF24'] as const,
+  },
+  {
+    id: 'career',
+    title: 'Career Compass',
+    description: 'Explore career paths and skills',
+    icon: 'compass',
+    color: '#EC4899',
+    gradient: ['#EC4899', '#F472B6'] as const,
+  },
+];
+
+export const educationLevels = [
+  'High School',
+  'Undergraduate',
+  'Graduate',
+  'Postgraduate',
+  'Self-Learner',
+];
+
+export const fieldsOfStudy = [
+  'Computer Science',
+  'Software Engineering',
+  'Data Science',
+  'Mathematics',
+  'Business',
+  'Arts',
+  'Humanities',
+  'Medicine',
+  'Law',
+  'Other',
+];
+
+export const courses = [
+  'BSCS - BS Computer Science',
+  'BSSE - BS Software Engineering',
+  'BSIT - BS Information Technology',
+  'BSDS - BS Data Science',
+  'BSMath - BS Mathematics',
+  'BBA - Business Administration',
+  'Other',
+];
+
+export const subjectsByCourse: Record<string, string[]> = {
+  'BSCS - BS Computer Science': [
+    'Data Structures & Algorithms',
+    'Object-Oriented Programming',
+    'Database Systems',
+    'Computer Networks',
+    'Operating Systems',
+    'Software Engineering',
+    'Artificial Intelligence',
+    'Web Development',
+  ],
+  'BSSE - BS Software Engineering': [
+    'Software Design Patterns',
+    'Software Quality Assurance',
+    'Requirements Engineering',
+    'Agile Methodologies',
+    'DevOps Practices',
+    'System Architecture',
+    'Testing & Automation',
+    'Project Management',
+  ],
+  'BSIT - BS Information Technology': [
+    'Network Administration',
+    'Cloud Computing',
+    'Cybersecurity',
+    'IT Project Management',
+    'System Administration',
+    'Web Technologies',
+    'Database Management',
+    'Mobile Development',
+  ],
+  'BSDS - BS Data Science': [
+    'Statistics & Probability',
+    'Machine Learning',
+    'Data Visualization',
+    'Big Data Analytics',
+    'Python for Data Science',
+    'Deep Learning',
+    'Natural Language Processing',
+    'Data Engineering',
+  ],
+  'BSMath - BS Mathematics': [
+    'Calculus',
+    'Linear Algebra',
+    'Discrete Mathematics',
+    'Differential Equations',
+    'Number Theory',
+    'Real Analysis',
+    'Abstract Algebra',
+    'Probability Theory',
+  ],
+  'BBA - Business Administration': [
+    'Marketing Management',
+    'Financial Accounting',
+    'Business Strategy',
+    'Organizational Behavior',
+    'Economics',
+    'Human Resource Management',
+    'Operations Management',
+    'Entrepreneurship',
+  ],
+  'Other': [
+    'General Studies',
+    'Research Methods',
+    'Academic Writing',
+    'Critical Thinking',
+  ],
+};
