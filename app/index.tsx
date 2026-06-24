@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { Redirect } from 'expo-router';
-import { useUserProfile } from '@/hooks/useUserProfile';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Index() {
-  const { profile, loading } = useUserProfile();
+  const { user, loading } = useAuth();
 
   if (loading) {
     return null;
   }
 
-  if (!profile || !profile.onboardingComplete) {
-    return <Redirect href="/onboarding" />;
+  if (!user) {
+    return <Redirect href="/auth/welcome" />;
   }
 
   return <Redirect href="/(tabs)" />;

@@ -1,67 +1,46 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
+  View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
-import {
-  ArrowLeft,
-  Send,
-  Bot,
-  User,
-  BookOpen,
-  Calculator,
-  Atom,
-  FlaskConical,
-} from 'lucide-react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { Colors, DarkColors, Gradients, Shadows, Spacing, BorderRadius } from '@/constants/theme';
+import { ArrowLeft, Send, Bot, User, BookOpen, Code, Hash, Database, Globe } from 'lucide-react-native';
+import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/contexts/ThemeContext';
+import { Colors, DarkColors, Gradients, Spacing, BorderRadius } from '@/constants/theme';
 
 interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
-  timestamp: Date;
 }
 
 const quickQuestions = [
   { icon: BookOpen, label: 'Explain Big O notation' },
-  { icon: Calculator, label: 'Solve: derivative of x²' },
-  { icon: Atom, label: 'What is a hash table?' },
-  { icon: FlaskConical, label: 'Explain SQL joins' },
+  { icon: Code, label: 'What is a hash table?' },
+  { icon: Database, label: 'Explain SQL joins' },
+  { icon: Hash, label: 'Difference between stack and queue' },
 ];
 
 const sampleResponses: Record<string, string> = {
-  'Explain photosynthesis':
-    'Photosynthesis is the process by which plants, algae, and some bacteria convert light energy (usually from the sun) into chemical energy stored in glucose.\n\n**Key steps:**\n1. Light absorption by chlorophyll\n2. Water splitting (photolysis)\n3. Carbon dioxide fixation\n4. Glucose synthesis\n\nThe overall equation: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂',
-  'Solve: derivative of x²':
-    'Using the power rule: d/dx(xⁿ) = n·xⁿ⁻¹\n\nFor f(x) = x²:\n• n = 2\n• f\'(x) = 2·x²⁻¹ = 2x\n\n**Answer: 2x**\n\nAt any point x, the slope of the tangent line to y = x² is 2x.',
-  'What is quantum mechanics?':
-    'Quantum mechanics is the branch of physics that describes the behavior of matter and energy at the smallest scales—atoms and subatomic particles.\n\n**Key principles:**\n• Wave-particle duality\n• Uncertainty principle\n• Quantum superposition\n• Quantum entanglement\n\nIt revolutionized our understanding of nature and led to technologies like lasers, transistors, and MRI scanners.',
-  'Chemistry periodic trends':
-    'Periodic trends are patterns in elemental properties across the periodic table:\n\n**Atomic radius:** Increases down a group, decreases across a period\n**Ionization energy:** Decreases down a group, increases across a period\n**Electronegativity:** Increases across a period (F is highest)\n**Metallic character:** Increases down a group, decreases across a period\n\nThese trends are driven by nuclear charge and electron shielding effects.',
+  'Explain Big O notation':
+    'Big O notation describes the performance or complexity of an algorithm. It tells you how much an algorithm\'s runtime or space requirements grow relative to the input size.\n\n**Common complexities:**\n• O(1) — Constant time\n• O(log n) — Logarithmic (binary search)\n• O(n) — Linear (simple loop)\n• O(n log n) — Linearithmic (merge sort)\n• O(n²) — Quadratic (nested loops)\n• O(2ⁿ) — Exponential (recursive Fibonacci)',
+  'What is a hash table?':
+    'A hash table is a data structure that implements an associative array abstract data type, mapping keys to values.\n\n**How it works:**\n• A hash function computes an index into an array of buckets\n• The key-value pair is stored in the corresponding bucket\n• Collisions are handled via chaining or open addressing\n\n**Average case:** O(1) for insert, delete, and search\n**Worst case:** O(n) when all keys hash to same bucket',
+  'Explain SQL joins':
+    'SQL joins combine rows from two or more tables based on a related column.\n\n**Types of joins:**\n• INNER JOIN — Returns matching rows from both tables\n• LEFT JOIN — Returns all rows from left table, matched from right\n• RIGHT JOIN — Returns all rows from right table, matched from left\n• FULL OUTER JOIN — Returns all rows when there is a match in either table\n• CROSS JOIN — Cartesian product of both tables',
+  'Difference between stack and queue':
+    'Stack and Queue are both linear data structures, but they differ in how elements are accessed.\n\n**Stack (LIFO):**\n• Last In, First Out\n• Push and Pop operations\n• Used for: function call stack, undo operations, expression evaluation\n\n**Queue (FIFO):**\n• First In, First Out\n• Enqueue and Dequeue operations\n• Used for: task scheduling, print queues, BFS algorithm',
 };
 
 export default function TutorScreen() {
   const router = useRouter();
-  const scrollViewRef = useRef<ScrollView>(null);
+  const { user } = useAuth();
   const { isDark } = useTheme();
+  const scrollViewRef = useRef<ScrollView>(null);
   const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome',
-      role: 'assistant',
-      content:
-        "Hello! I'm your AI Tutor. I can help you understand concepts, solve problems, and prepare for exams. What would you like to learn today?",
-      timestamp: new Date(),
-    },
+    { id: 'welcome', role: 'assistant', content: "Hello! I'm your AI Tutor. I can help you understand CS concepts, solve problems, and prepare for exams. What would you like to learn today?" },
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -72,157 +51,89 @@ export default function TutorScreen() {
   const textSecondary = isDark ? DarkColors.textSecondary : Colors.neutral[500];
   const textMuted = isDark ? DarkColors.textMuted : Colors.neutral[400];
 
-  const sendMessage = async (text: string) => {
-    if (!text.trim()) return;
-
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: text,
-      timestamp: new Date(),
-    };
-
+  const handleSend = async () => {
+    if (!input.trim()) return;
+    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: input.trim() };
     setMessages((prev) => [...prev, userMsg]);
     setInput('');
     setIsTyping(true);
 
-    // Simulate AI response
     setTimeout(() => {
-      const response =
-        sampleResponses[text] ||
-        `That's a great question about "${text}"! Here's what I can tell you:\n\n• This topic involves several key concepts worth exploring\n• Breaking it down into smaller parts helps with understanding\n• Practice problems will reinforce your learning\n\nWould you like me to go deeper into any specific aspect?`;
-
-      const assistantMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: response,
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, assistantMsg]);
+      const response = sampleResponses[userMsg.content] ||
+        `That's a great question about ${userMsg.content}!\n\nIn computer science, understanding the fundamentals is key. Let me break this down:\n\n**Key Concepts:**\n• This topic is foundational to software engineering\n• Practice with hands-on coding exercises\n• Review related data structures and algorithms\n\nWould you like me to explain a specific aspect in more detail?`;
+      setMessages((prev) => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: response }]);
       setIsTyping(false);
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, 800);
+  };
 
-      setTimeout(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-      }, 100);
-    }, 1500);
+  const handleQuickQuestion = (label: string) => {
+    setInput(label);
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={[styles.container, { backgroundColor: bg }]}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-    >
-      <View style={[styles.header, { backgroundColor: cardBg, borderBottomColor: isDark ? DarkColors.border : Colors.neutral[100] }]}>
-        <TouchableOpacity onPress={() => router.back()} style={[styles.backButton, { backgroundColor: isDark ? DarkColors.surface : Colors.neutral[100] }]}>
-          <ArrowLeft size={24} color={textSecondary} />
-        </TouchableOpacity>
-        <View style={styles.headerCenter}>
-          <LinearGradient colors={Gradients.primary} style={styles.botIcon}>
-            <Bot size={20} color="#FFFFFF" />
-          </LinearGradient>
-          <View>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={[styles.container, { backgroundColor: bg }]}>
+      <LinearGradient colors={isDark ? ['#131827', '#0B0E17'] : ['#F0F4FF', '#FAFAFA']} style={styles.header}>
+        <View style={styles.headerRow}>
+          <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}><ArrowLeft size={24} color={textPrimary} /></TouchableOpacity>
+          <View style={styles.headerCenter}>
+            <LinearGradient colors={Gradients.primary} style={styles.botIcon}>
+              <Bot size={20} color="#FFFFFF" />
+            </LinearGradient>
             <Text style={[styles.headerTitle, { color: textPrimary }]}>AI Tutor</Text>
-            <Text style={styles.headerStatus}>Online</Text>
           </View>
+          <View style={{ width: 40 }} />
         </View>
-        <View style={{ width: 40 }} />
-      </View>
+      </LinearGradient>
 
-      <ScrollView
-        ref={scrollViewRef}
-        style={styles.messagesContainer}
-        contentContainerStyle={styles.messagesContent}
-        showsVerticalScrollIndicator={false}
-        onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
-      >
-        {messages.length === 1 && (
-          <View style={styles.quickQuestions}>
-            <Text style={[styles.quickTitle, { color: textSecondary }]}>Quick Questions</Text>
-            <View style={styles.quickGrid}>
-              {quickQuestions.map((q, i) => {
-                const Icon = q.icon;
-                return (
-                  <TouchableOpacity
-                    key={i}
-                    style={[styles.quickButton, { backgroundColor: isDark ? DarkColors.surface : Colors.primary[50], borderColor: isDark ? DarkColors.border : Colors.primary[200] }]}
-                    onPress={() => sendMessage(q.label)}
-                  >
-                    <Icon size={18} color={Colors.primary[500]} />
-                    <Text style={[styles.quickButtonText, { color: Colors.primary[700] }]}>{q.label}</Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-        )}
-
-        {messages.map((msg, index) => (
-          <Animated.View
-            key={msg.id}
-            entering={FadeInUp.delay(100).duration(300)}
-            style={[
-              styles.messageRow,
-              msg.role === 'user' ? styles.messageRowUser : styles.messageRowAssistant,
-            ]}
-          >
+      <ScrollView ref={scrollViewRef} style={styles.chat} showsVerticalScrollIndicator={false} onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}>
+        {messages.map((msg) => (
+          <View key={msg.id} style={[styles.messageRow, msg.role === 'user' ? styles.userRow : styles.assistantRow]}>
             {msg.role === 'assistant' && (
               <LinearGradient colors={Gradients.primary} style={styles.messageAvatar}>
                 <Bot size={14} color="#FFFFFF" />
               </LinearGradient>
             )}
-            <View
-              style={[
-                styles.messageBubble,
-                msg.role === 'user' ? { backgroundColor: Colors.primary[500] } : [styles.assistantBubble, { backgroundColor: cardBg }],
-              ]}
-            >
-              <Text
-                style={[
-                  styles.messageText,
-                  msg.role === 'user' ? styles.userText : [styles.assistantText, { color: textPrimary }],
-                ]}
-              >
-                {msg.content}
-              </Text>
+            <View style={[styles.messageBubble, msg.role === 'user' ? { backgroundColor: Colors.primary[500] } : { backgroundColor: cardBg }]}>
+              <Text style={[styles.messageText, msg.role === 'user' ? { color: '#FFFFFF' } : { color: textPrimary }]}>{msg.content}</Text>
             </View>
             {msg.role === 'user' && (
-              <View style={[styles.userAvatar, { backgroundColor: isDark ? DarkColors.surface : Colors.neutral[200] }]}>
-                <User size={14} color={textMuted} />
+              <View style={[styles.messageAvatar, { backgroundColor: Colors.neutral[200] }]}>
+                <User size={14} color={Colors.neutral[600]} />
               </View>
             )}
-          </Animated.View>
+          </View>
         ))}
-
         {isTyping && (
-          <View style={styles.typingIndicator}>
-            <LinearGradient colors={Gradients.primary} style={styles.typingAvatar}>
-              <Bot size={14} color="#FFFFFF" />
-            </LinearGradient>
-            <View style={[styles.typingBubble, { backgroundColor: cardBg }]}>
-              <Text style={[styles.typingText, { color: textSecondary }]}>Thinking...</Text>
-            </View>
+          <View style={[styles.typingBubble, { backgroundColor: cardBg }]}>
+            <Text style={[styles.typingText, { color: textMuted }]}>AI is typing...</Text>
           </View>
         )}
+        <View style={{ height: 20 }} />
       </ScrollView>
 
-      <View style={[styles.inputContainer, { backgroundColor: cardBg, borderTopColor: isDark ? DarkColors.border : Colors.neutral[100] }]}>
+      <View style={styles.quickQuestions}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.quickRow}>
+          {quickQuestions.map((q) => (
+            <TouchableOpacity key={q.label} style={[styles.quickChip, { backgroundColor: cardBg }]} onPress={() => handleQuickQuestion(q.label)}>
+              <q.icon size={14} color={Colors.primary[500]} />
+              <Text style={[styles.quickChipText, { color: textSecondary }]}>{q.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
+      <View style={[styles.inputBar, { backgroundColor: cardBg, borderTopColor: isDark ? DarkColors.border : Colors.neutral[200] }]}>
         <TextInput
-          style={[styles.input, { backgroundColor: isDark ? DarkColors.surface : Colors.neutral[100], color: textPrimary }]}
-          placeholder="Ask anything..."
+          style={[styles.input, { color: textPrimary }]}
+          placeholder="Ask anything about CS..."
+          placeholderTextColor={textMuted}
           value={input}
           onChangeText={setInput}
           multiline
-          maxLength={500}
-          placeholderTextColor={textMuted}
         />
-        <TouchableOpacity
-          style={[styles.sendButton, !input.trim() && styles.sendButtonDisabled]}
-          onPress={() => sendMessage(input)}
-          disabled={!input.trim()}
-        >
-          <LinearGradient colors={Gradients.primary} style={styles.sendGradient}>
+        <TouchableOpacity style={styles.sendBtn} onPress={handleSend} disabled={!input.trim()}>
+          <LinearGradient colors={Gradients.primary} style={[styles.sendGradient, !input.trim() && { opacity: 0.4 }]}>
             <Send size={18} color="#FFFFFF" />
           </LinearGradient>
         </TouchableOpacity>
@@ -232,178 +143,28 @@ export default function TutorScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 60,
-    paddingHorizontal: Spacing['2xl'],
-    paddingBottom: Spacing.lg,
-    borderBottomWidth: 1,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: BorderRadius.full,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerCenter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.md,
-  },
-  botIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: BorderRadius.full,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 16,
-  },
-  headerStatus: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 12,
-    color: Colors.success[500],
-  },
-  messagesContainer: {
-    flex: 1,
-  },
-  messagesContent: {
-    padding: Spacing['2xl'],
-    paddingBottom: Spacing.lg,
-  },
-  quickQuestions: {
-    marginBottom: Spacing.lg,
-  },
-  quickTitle: {
-    fontFamily: 'Inter-SemiBold',
-    fontSize: 14,
-    marginBottom: Spacing.md,
-  },
-  quickGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.sm,
-  },
-  quickButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.sm,
-    borderRadius: BorderRadius.lg,
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    borderWidth: 1,
-  },
-  quickButtonText: {
-    fontFamily: 'Inter-Medium',
-    fontSize: 12,
-  },
-  messageRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    marginBottom: Spacing.md,
-    gap: Spacing.sm,
-  },
-  messageRowUser: {
-    justifyContent: 'flex-end',
-  },
-  messageRowAssistant: {
-    justifyContent: 'flex-start',
-  },
-  messageAvatar: {
-    width: 28,
-    height: 28,
-    borderRadius: BorderRadius.full,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  userAvatar: {
-    width: 28,
-    height: 28,
-    borderRadius: BorderRadius.full,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  messageBubble: {
-    maxWidth: '75%',
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.xl,
-  },
-  assistantBubble: {
-    borderBottomLeftRadius: 4,
-    ...Shadows.sm,
-  },
-  messageText: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  userText: {
-    color: '#FFFFFF',
-  },
-  assistantText: {
-    color: Colors.neutral[900],
-  },
-  typingIndicator: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.sm,
-    marginBottom: Spacing.md,
-  },
-  typingAvatar: {
-    width: 28,
-    height: 28,
-    borderRadius: BorderRadius.full,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  typingBubble: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.xl,
-    borderBottomLeftRadius: 4,
-    ...Shadows.sm,
-  },
-  typingText: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 13,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.md,
-    paddingHorizontal: Spacing['2xl'],
-    paddingVertical: Spacing.md,
-    borderTopWidth: 1,
-  },
-  input: {
-    flex: 1,
-    borderRadius: BorderRadius.full,
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-    maxHeight: 100,
-  },
-  sendButton: {
-    ...Shadows.sm,
-  },
-  sendButtonDisabled: {
-    opacity: 0.5,
-  },
-  sendGradient: {
-    width: 44,
-    height: 44,
-    borderRadius: BorderRadius.full,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  container: { flex: 1 },
+  header: { paddingTop: 60, paddingHorizontal: Spacing['2xl'], paddingBottom: Spacing.lg },
+  headerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  backBtn: { width: 40, height: 40, justifyContent: 'center', alignItems: 'center' },
+  headerCenter: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, flex: 1, justifyContent: 'center' },
+  botIcon: { width: 36, height: 36, borderRadius: BorderRadius.lg, justifyContent: 'center', alignItems: 'center' },
+  headerTitle: { fontFamily: 'Inter-Bold', fontSize: 18 },
+  chat: { flex: 1, paddingHorizontal: Spacing['2xl'] },
+  messageRow: { flexDirection: 'row', alignItems: 'flex-end', marginBottom: Spacing.md, gap: Spacing.sm },
+  userRow: { justifyContent: 'flex-end' },
+  assistantRow: { justifyContent: 'flex-start' },
+  messageAvatar: { width: 28, height: 28, borderRadius: BorderRadius.full, justifyContent: 'center', alignItems: 'center' },
+  messageBubble: { maxWidth: '80%', borderRadius: BorderRadius.xl, padding: Spacing.lg },
+  messageText: { fontFamily: 'Inter-Regular', fontSize: 14, lineHeight: 20 },
+  typingBubble: { alignSelf: 'flex-start', borderRadius: BorderRadius.xl, padding: Spacing.md, marginBottom: Spacing.md },
+  typingText: { fontFamily: 'Inter-Regular', fontSize: 12 },
+  quickQuestions: { paddingVertical: Spacing.sm },
+  quickRow: { paddingHorizontal: Spacing['2xl'], gap: Spacing.sm },
+  quickChip: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.sm, borderRadius: BorderRadius.full, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.04, shadowRadius: 2, elevation: 1 },
+  quickChipText: { fontFamily: 'Inter-Medium', fontSize: 12 },
+  inputBar: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing['2xl'], paddingVertical: Spacing.md, borderTopWidth: 1, gap: Spacing.sm },
+  input: { flex: 1, fontFamily: 'Inter-Regular', fontSize: 15, maxHeight: 80 },
+  sendBtn: { shadowColor: '#6366F1', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 4, elevation: 2 },
+  sendGradient: { width: 40, height: 40, borderRadius: BorderRadius.full, justifyContent: 'center', alignItems: 'center' },
 });

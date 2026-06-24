@@ -18,22 +18,60 @@ import {
   TrendingUp,
   Award,
 } from 'lucide-react-native';
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme } from '@/contexts/ThemeContext';
 import { Colors, Gradients, DarkColors, Spacing, BorderRadius } from '@/constants/theme';
-import { sampleCareers } from '@/constants/data';
+
+const careers = [
+  {
+    id: '1',
+    title: 'Software Engineer',
+    category: 'Technology',
+    skills: ['JavaScript', 'React', 'Node.js', 'Git', 'System Design'],
+    certifications: ['AWS Certified Developer', 'Meta Frontend'],
+    outlook: 'Strong growth, 25% increase projected',
+    salary: '$80,000 - $150,000',
+  },
+  {
+    id: '2',
+    title: 'Data Scientist',
+    category: 'Technology',
+    skills: ['Python', 'Statistics', 'Machine Learning', 'SQL'],
+    certifications: ['Google Data Analytics', 'IBM Data Science'],
+    outlook: 'High demand, 35% growth expected',
+    salary: '$95,000 - $165,000',
+  },
+  {
+    id: '3',
+    title: 'DevOps Engineer',
+    category: 'Technology',
+    skills: ['Docker', 'Kubernetes', 'CI/CD', 'Cloud', 'Linux'],
+    certifications: ['AWS Certified DevOps', 'CKA'],
+    outlook: 'Critical role, 30% growth projected',
+    salary: '$90,000 - $160,000',
+  },
+  {
+    id: '4',
+    title: 'AI/ML Engineer',
+    category: 'Technology',
+    skills: ['Python', 'TensorFlow', 'PyTorch', 'Deep Learning'],
+    certifications: ['Google ML Engineer', 'AWS ML Specialty'],
+    outlook: 'Explosive growth in AI sector',
+    salary: '$100,000 - $180,000',
+  },
+];
 
 export default function CareerTabScreen() {
   const { isDark } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCareer, setSelectedCareer] = useState<string | null>(null);
 
-  const filteredCareers = sampleCareers.filter(
+  const filteredCareers = careers.filter(
     (c) =>
       c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       c.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const currentCareer = sampleCareers.find((c) => c.id === selectedCareer);
+  const currentCareer = careers.find((c) => c.id === selectedCareer);
 
   const bg = isDark ? DarkColors.bg : '#FAFAFA';
   const cardBg = isDark ? DarkColors.surfaceElevated : '#FFFFFF';
@@ -48,9 +86,7 @@ export default function CareerTabScreen() {
           <TouchableOpacity onPress={() => setSelectedCareer(null)} style={[styles.backButton, { backgroundColor: isDark ? DarkColors.surface : Colors.neutral[100] }]}>
             <Compass size={24} color={textSecondary} />
           </TouchableOpacity>
-          <Text style={[styles.detailTitle, { color: textPrimary }]} numberOfLines={1}>
-            {currentCareer.title}
-          </Text>
+          <Text style={[styles.detailTitle, { color: textPrimary }]} numberOfLines={1}>{currentCareer.title}</Text>
           <View style={{ width: 40 }} />
         </View>
 
@@ -108,14 +144,11 @@ export default function CareerTabScreen() {
               'Apply for internships/entry roles',
             ].map((step, i) => (
               <View key={i} style={[styles.roadmapItem, { borderBottomColor: isDark ? DarkColors.border : Colors.neutral[100] }]}>
-                <View style={styles.roadmapNumber}>
-                  <Text style={styles.roadmapNumberText}>{i + 1}</Text>
-                </View>
+                <View style={styles.roadmapNumber}><Text style={styles.roadmapNumberText}>{i + 1}</Text></View>
                 <Text style={[styles.roadmapText, { color: textSecondary }]}>{step}</Text>
               </View>
             ))}
           </View>
-
           <View style={{ height: 40 }} />
         </ScrollView>
       </View>
@@ -153,10 +186,7 @@ export default function CareerTabScreen() {
           <Text style={[styles.listSectionTitle, { color: textPrimary }]}>Career Paths</Text>
           {filteredCareers.map((career, index) => (
             <Animated.View key={career.id} entering={FadeInUp.delay(index * 100).duration(400)}>
-              <TouchableOpacity
-                style={[styles.careerCard, { backgroundColor: cardBg }]}
-                onPress={() => setSelectedCareer(career.id)}
-              >
+              <TouchableOpacity style={[styles.careerCard, { backgroundColor: cardBg }]} onPress={() => setSelectedCareer(career.id)}>
                 <LinearGradient colors={isDark ? [DarkColors.surfaceHighlight, DarkColors.surface] : ['#EEF2FF', '#E0E7FF']} style={styles.careerIconBg}>
                   <Briefcase size={28} color={Colors.primary[500]} />
                 </LinearGradient>
@@ -173,7 +203,6 @@ export default function CareerTabScreen() {
             </Animated.View>
           ))}
         </View>
-
         <View style={{ height: 100 }} />
       </ScrollView>
     </View>
@@ -181,251 +210,44 @@ export default function CareerTabScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    paddingTop: 60,
-    paddingHorizontal: Spacing['2xl'],
-    paddingBottom: Spacing.lg,
-  },
-  headerTitle: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 28,
-    marginBottom: Spacing.lg,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: BorderRadius.full,
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
-    gap: Spacing.sm,
-  },
-  searchInput: {
-    flex: 1,
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-  },
-  introCard: {
-    paddingHorizontal: Spacing['2xl'],
-    marginTop: Spacing['2xl'],
-  },
-  introGradient: {
-    borderRadius: BorderRadius.xl,
-    padding: Spacing['2xl'],
-    alignItems: 'center',
-  },
-  introTitle: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 18,
-    marginTop: Spacing.md,
-  },
-  introDesc: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 13,
-    textAlign: 'center',
-    marginTop: Spacing.xs,
-    lineHeight: 20,
-  },
-  section: {
-    paddingHorizontal: Spacing['2xl'],
-    marginTop: Spacing['2xl'],
-  },
-  listSectionTitle: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 18,
-    marginBottom: Spacing.lg,
-  },
-  careerCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: BorderRadius.xl,
-    padding: Spacing.lg,
-    marginBottom: Spacing.md,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
-    gap: Spacing.md,
-  },
-  careerIconBg: {
-    width: 56,
-    height: 56,
-    borderRadius: BorderRadius.lg,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  careerInfo: {
-    flex: 1,
-  },
-  careerCardTitle: {
-    fontFamily: 'Inter-SemiBold',
-    fontSize: 15,
-  },
-  careerCategory: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 12,
-    marginTop: 2,
-  },
-  careerMeta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 2,
-    marginTop: 4,
-  },
-  careerSalary: {
-    fontFamily: 'Inter-Medium',
-    fontSize: 12,
-    color: Colors.success[600],
-  },
-  detailHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 60,
-    paddingHorizontal: Spacing['2xl'],
-    paddingBottom: Spacing.lg,
-    borderBottomWidth: 1,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: BorderRadius.full,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  detailTitle: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 16,
-    flex: 1,
-    textAlign: 'center',
-    marginHorizontal: Spacing.md,
-  },
-  detailContent: {
-    flex: 1,
-    paddingHorizontal: Spacing['2xl'],
-    paddingTop: Spacing.lg,
-  },
-  careerHero: {
-    borderRadius: BorderRadius['3xl'],
-    padding: Spacing['3xl'],
-    alignItems: 'center',
-    shadowColor: '#6366F1',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 24,
-    elevation: 12,
-    marginBottom: Spacing['2xl'],
-  },
-  careerHeroTitle: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 24,
-    color: '#FFFFFF',
-    marginTop: Spacing.lg,
-  },
-  careerHeroCategory: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-    color: 'rgba(255,255,255,0.8)',
-    marginTop: Spacing.xs,
-  },
-  infoGrid: {
-    flexDirection: 'row',
-    gap: Spacing.md,
-    marginBottom: Spacing['2xl'],
-  },
-  infoCard: {
-    flex: 1,
-    borderRadius: BorderRadius.xl,
-    padding: Spacing.lg,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
-  },
-  infoValue: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 14,
-    marginTop: Spacing.sm,
-    textAlign: 'center',
-  },
-  infoLabel: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 11,
-    marginTop: 2,
-  },
-  sectionCard: {
-    borderRadius: BorderRadius.xl,
-    padding: Spacing.lg,
-    marginBottom: Spacing.lg,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    elevation: 2,
-  },
-  sectionCardTitle: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 16,
-    marginBottom: Spacing.md,
-  },
-  skillsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.sm,
-  },
-  skillChip: {
-    borderRadius: BorderRadius.full,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.xs,
-  },
-  skillChipText: {
-    fontFamily: 'Inter-Medium',
-    fontSize: 12,
-  },
-  certItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.sm,
-    paddingVertical: Spacing.sm,
-    borderBottomWidth: 1,
-  },
-  certText: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-  },
-  roadmapItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.md,
-    paddingVertical: Spacing.md,
-    borderBottomWidth: 1,
-  },
-  roadmapNumber: {
-    width: 28,
-    height: 28,
-    borderRadius: BorderRadius.full,
-    backgroundColor: Colors.primary[500],
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  roadmapNumberText: {
-    fontFamily: 'Inter-Bold',
-    fontSize: 12,
-    color: '#FFFFFF',
-  },
-  roadmapText: {
-    fontFamily: 'Inter-Regular',
-    fontSize: 14,
-    flex: 1,
-  },
+  container: { flex: 1 },
+  header: { paddingTop: 60, paddingHorizontal: Spacing['2xl'], paddingBottom: Spacing.lg },
+  headerTitle: { fontFamily: 'Inter-Bold', fontSize: 28, marginBottom: Spacing.lg },
+  searchContainer: { flexDirection: 'row', alignItems: 'center', borderRadius: BorderRadius.full, paddingHorizontal: Spacing.lg, paddingVertical: Spacing.md, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 6, elevation: 2, gap: Spacing.sm },
+  searchInput: { flex: 1, fontFamily: 'Inter-Regular', fontSize: 14 },
+  introCard: { paddingHorizontal: Spacing['2xl'], marginTop: Spacing['2xl'] },
+  introGradient: { borderRadius: BorderRadius.xl, padding: Spacing['2xl'], alignItems: 'center' },
+  introTitle: { fontFamily: 'Inter-Bold', fontSize: 18, marginTop: Spacing.md },
+  introDesc: { fontFamily: 'Inter-Regular', fontSize: 13, textAlign: 'center', marginTop: Spacing.xs, lineHeight: 20 },
+  section: { paddingHorizontal: Spacing['2xl'], marginTop: Spacing['2xl'] },
+  listSectionTitle: { fontFamily: 'Inter-Bold', fontSize: 18, marginBottom: Spacing.lg },
+  careerCard: { flexDirection: 'row', alignItems: 'center', borderRadius: BorderRadius.xl, padding: Spacing.lg, marginBottom: Spacing.md, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 6, elevation: 2, gap: Spacing.md },
+  careerIconBg: { width: 56, height: 56, borderRadius: BorderRadius.lg, justifyContent: 'center', alignItems: 'center' },
+  careerInfo: { flex: 1 },
+  careerCardTitle: { fontFamily: 'Inter-SemiBold', fontSize: 15 },
+  careerCategory: { fontFamily: 'Inter-Regular', fontSize: 12, marginTop: 2 },
+  careerMeta: { flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 4 },
+  careerSalary: { fontFamily: 'Inter-Medium', fontSize: 12, color: Colors.success[600] },
+  detailHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 60, paddingHorizontal: Spacing['2xl'], paddingBottom: Spacing.lg, borderBottomWidth: 1 },
+  backButton: { width: 40, height: 40, borderRadius: BorderRadius.full, justifyContent: 'center', alignItems: 'center' },
+  detailTitle: { fontFamily: 'Inter-Bold', fontSize: 16, flex: 1, textAlign: 'center', marginHorizontal: Spacing.md },
+  detailContent: { flex: 1, paddingHorizontal: Spacing['2xl'], paddingTop: Spacing.lg },
+  careerHero: { borderRadius: BorderRadius['3xl'], padding: Spacing['3xl'], alignItems: 'center', shadowColor: '#6366F1', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 24, elevation: 12, marginBottom: Spacing['2xl'] },
+  careerHeroTitle: { fontFamily: 'Inter-Bold', fontSize: 24, color: '#FFFFFF', marginTop: Spacing.lg },
+  careerHeroCategory: { fontFamily: 'Inter-Regular', fontSize: 14, color: 'rgba(255,255,255,0.8)', marginTop: Spacing.xs },
+  infoGrid: { flexDirection: 'row', gap: Spacing.md, marginBottom: Spacing['2xl'] },
+  infoCard: { flex: 1, borderRadius: BorderRadius.xl, padding: Spacing.lg, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 6, elevation: 2 },
+  infoValue: { fontFamily: 'Inter-Bold', fontSize: 14, marginTop: Spacing.sm, textAlign: 'center' },
+  infoLabel: { fontFamily: 'Inter-Regular', fontSize: 11, marginTop: 2 },
+  sectionCard: { borderRadius: BorderRadius.xl, padding: Spacing.lg, marginBottom: Spacing.lg, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 6, elevation: 2 },
+  sectionCardTitle: { fontFamily: 'Inter-Bold', fontSize: 16, marginBottom: Spacing.md },
+  skillsContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
+  skillChip: { borderRadius: BorderRadius.full, paddingHorizontal: Spacing.md, paddingVertical: Spacing.xs },
+  skillChipText: { fontFamily: 'Inter-Medium', fontSize: 12 },
+  certItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingVertical: Spacing.sm, borderBottomWidth: 1 },
+  certText: { fontFamily: 'Inter-Regular', fontSize: 14 },
+  roadmapItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: Spacing.md, borderBottomWidth: 1 },
+  roadmapNumber: { width: 28, height: 28, borderRadius: BorderRadius.full, backgroundColor: Colors.primary[500], justifyContent: 'center', alignItems: 'center' },
+  roadmapNumberText: { fontFamily: 'Inter-Bold', fontSize: 12, color: '#FFFFFF' },
+  roadmapText: { fontFamily: 'Inter-Regular', fontSize: 14, flex: 1 },
 });
