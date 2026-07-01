@@ -174,16 +174,6 @@ npx expo start --web
 
 ---
 
-# 🔥 Environment Variables
-
-Create a `.env` file.
-
-```env
-EXPO_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
-EXPO_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
-```
-
----
 
 # 📊 App Highlights
 
@@ -206,20 +196,6 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 ✅ Expo Router Navigation
 
 ✅ TypeScript Support
-
----
-
-# 📸 Screenshots
-
-> Add screenshots here after deployment.
-
-| Home | Planner | Study |
-|------|---------|--------|
-| 📷 | 📷 | 📷 |
-
-| Assignments | Career | Profile |
-|-------------|---------|----------|
-| 📷 | 📷 | 📷 |
 
 ---
 
@@ -274,14 +250,6 @@ Regular improvements and new features are continuously being added.
 
 ---
 
-# 💖 Acknowledgements
-
-- Expo Team
-- React Native Community
-- Supabase
-- Lucide Icons
-
----
 
 <div align="center">
 
