@@ -1,354 +1,294 @@
-# 🎓 StudyPilot AI
+<div align="center">
 
-> **Your Smart AI-Powered Learning Companion**
+# 🚀 StudyPilot AI
+### *Your Intelligent Study Companion for Academic Success* 🎓
 
-StudyPilot AI is a premium, mobile-first student productivity application designed to help learners organize their academic life, improve study efficiency, and stay motivated throughout their educational journey.
+<img src="https://img.shields.io/badge/Expo-54.0.10-000020?style=for-the-badge&logo=expo" />
+<img src="https://img.shields.io/badge/React%20Native-0.81.4-61DAFB?style=for-the-badge&logo=react" />
+<img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript" />
+<img src="https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase" />
+<img src="https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge" />
 
-Built with a modern, scalable architecture, StudyPilot AI combines intelligent planning tools, AI-inspired learning experiences, analytics, and gamification into a single elegant mobile application.
+---
+
+### 📚 Plan • 📈 Track • 🤖 Learn • 🎯 Achieve
+
+An AI-powered student productivity platform designed to help students organize their academic life, manage assignments, track study sessions, plan careers, and stay motivated—all in one beautiful mobile application.
+
+</div>
 
 ---
 
 # ✨ Features
 
-## 🏠 Personalized Dashboard
-
-* Personalized welcome message
-* Daily study streak tracking
-* Upcoming deadlines
-* Today's study plan
-* Weekly progress overview
-* Motivational quotes
-* Recent activity history
-* Quick access feature cards
-
-## 📝 Assignment Assistant
-
-Generate structured assignment guidance including:
-
-* Outlines
-* Research points
-* Draft ideas
-* Submission checklists
-* Organized workflows
-
-## 📊 Presentation Builder
-
-Create presentation structures with:
-
-* Slide-by-slide breakdowns
-* Titles and headings
-* Bullet points
-* Speaker notes
-* Q&A preparation
-* Presentation tips
-
-## 📅 Study Planner
-
-Plan studies efficiently by generating:
-
-* Daily schedules
-* Weekly study plans
-* Revision reminders
-* Priority-based task management
-
-## 🤖 AI Tutor
-
-Interactive tutoring interface supporting:
-
-* Concept explanations
-* Step-by-step learning
-* Exam preparation
-* General academic assistance
-
-## ❓ Quiz Generator
-
-Generate quizzes from:
-
-* Topics
-* Notes
-* Uploaded material
-
-Supports:
-
-* Multiple Choice Questions
-* True/False
-* Short Answer Questions
-
-## 🧠 Flashcards
-
-* Manual flashcard creation
-* Automatic generation
-* Swipe navigation
-* Flip animations
-* Mastered card tracking
-
-## 📚 Notes Simplifier
-
-Transform lengthy notes into:
-
-* Concise summaries
-* Key concepts
-* Definitions
-* Bullet notes
-* Revision points
-
-## 📄 Document Upload (Frontend Simulation)
-
-UI support for:
-
-* PDF
-* DOCX
-* PPT/PPTX
-* Images
-
-Local simulation only (no backend processing).
-
-## 📷 OCR Scanner (UI Simulation)
-
-Supports interfaces for:
-
-* Handwritten notes
-* Textbook scanning
-* Image uploads
-* Placeholder OCR processing
-
-## 🎤 Voice Study Assistant (UI Simulation)
-
-Includes:
-
-* Voice recording interface
-* Dictation controls
-* Recording animations
-* Placeholder responses
-
-## 🎯 Exam Mode
-
-Generate personalized revision plans using:
-
-* Exam dates
-* Subjects
-* Confidence levels
-* Available study hours
-
-Features:
-
-* Countdown timers
-* Revision timelines
-* Daily targets
-
-## 🚀 Career Compass
-
-Receive career recommendations based on:
-
-* Interests
-* Skills
-* Subjects
-* Personality
-
-Displays:
-
-* Career paths
-* Required skills
-* Certifications
-* Learning roadmaps
-* Industry outlook
-
-## 📆 Calendar & Deadlines
-
-* Monthly calendar
-* Weekly planner
-* Deadline tracking
-* Exam reminders
-* Dynamic current-day highlighting
-
-## 🔍 Global Search
-
-Search across:
-
-* Assignments
-* Notes
-* Flashcards
-* Quizzes
-* Study plans
-
-## 📈 Analytics Dashboard
-
-Track progress with:
-
-* Study hours
-* Completed tasks
-* Quiz performance
-* Flashcards reviewed
-* Learning streaks
-* Weekly & monthly charts
-
-## 🏆 Gamification
-
-Stay motivated through:
-
-* XP points
-* Achievement badges
-* Study streaks
-* Milestones
-* Reward animations
-
-## 🔔 Notifications
-
-Receive reminders for:
-
-* Deadlines
-* Exams
-* Daily goals
-* Study sessions
-* Motivation messages
-
-## 👤 Profile & Settings
-
-Manage:
-
-* Personal information
-* Academic details
-* Achievements
-* Preferences
-* Notification settings
-* Language
-* Privacy
-* Theme (Light/Dark Mode)
+## 📅 Smart Planner
+- Daily & weekly study planning
+- Intelligent task scheduling
+- Priority-based organization
+- Progress tracking
 
 ---
 
-# 🎨 Design Philosophy
-
-* Premium mobile-first experience
-* Modern and minimal interface
-* Rounded components
-* Beautiful gradients
-* Soft shadows
-* Smooth animations
-* Interactive micro-interactions
-* Elegant typography
-* Consistent spacing
-* Responsive layouts
-* Subtle 3D-inspired visuals
+## 📖 Study Dashboard
+- Study session management
+- Learning analytics
+- Personalized recommendations
+- Productivity insights
 
 ---
 
-# 🏗️ Project Structure
+## 📝 Assignment Manager
+- Assignment tracking
+- Due date reminders
+- Completion status
+- Progress monitoring
 
-```text
-StudyPilot-AI/
+---
+
+## 🎯 Career Guidance
+- Career exploration
+- Learning roadmap
+- Goal setting
+- Skill recommendations
+
+---
+
+## 👤 User Profile
+- Personalized dashboard
+- Performance overview
+- Achievement tracking
+- Secure authentication
+
+---
+
+## 🔐 Authentication
+- Secure Login
+- User Registration
+- Persistent Sessions
+- Supabase Authentication
+
+---
+
+## 🎨 Modern UI/UX
+
+- Beautiful gradients
+- Responsive layouts
+- Smooth navigation
+- Modern typography
+- Interactive animations
+- Mobile-first design
+
+---
+
+# 🛠 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| ⚛ React Native | Cross-platform mobile development |
+| 🚀 Expo SDK 54 | Development framework |
+| 🧭 Expo Router | File-based navigation |
+| 🔥 Supabase | Authentication & Backend |
+| 💎 TypeScript | Type Safety |
+| 🎨 Lucide Icons | Beautiful icons |
+| 📊 React Native Chart Kit | Charts & Analytics |
+
+---
+
+# 📱 Screens
+
+- 🏠 Home
+- 📚 Study
+- 📅 Planner
+- 📝 Assignments
+- 🎯 Career
+- 👤 Profile
+- 🔐 Authentication
+
+---
+
+# 📂 Project Structure
+
+```
+StudyPilot-AI
 │
 ├── app/
 │   ├── (tabs)/
-│   │   ├── home/
-│   │   ├── planner/
-│   │   ├── study/
-│   │   ├── career/
-│   │   └── profile/
-│   │
 │   ├── onboarding/
-│   ├── assignment/
-│   ├── presentation/
-│   ├── ai-tutor/
-│   ├── flashcards/
-│   ├── quizzes/
-│   ├── notes/
-│   ├── exam-mode/
-│   ├── analytics/
-│   ├── notifications/
-│   └── settings/
+│   ├── assignments.tsx
+│   ├── career.tsx
 │
 ├── components/
-│   ├── cards/
-│   ├── charts/
-│   ├── buttons/
-│   ├── forms/
-│   ├── navigation/
-│   └── ui/
-│
-├── assets/
-│   ├── images/
-│   ├── icons/
-│   └── fonts/
-│
-├── hooks/
-├── services/
-├── utils/
 ├── constants/
-├── types/
-├── store/
-├── package.json
-└── README.md
+├── hooks/
+├── utils/
+├── assets/
+├── supabase/
+└── package.json
 ```
 
 ---
 
-# 📱 Navigation
+# 🚀 Installation
 
-Bottom Navigation Tabs:
+Clone the repository
 
-* 🏠 Home
-* 📅 Planner
-* 📚 Study
-* 🚀 Career
-* 👤 Profile
+```bash
+git clone https://github.com/ArfaMunam47/StudyPilot-AI.git
+```
 
----
+Move into the project
 
-# 💾 Local Functionality
+```bash
+cd StudyPilot-AI
+```
 
-Without requiring a backend, the application supports:
+Install dependencies
 
-* Local state persistence
-* Working buttons and interactions
-* Form data storage
-* Dynamic calendar updates
-* Search over demo data
-* Interactive charts
-* Navigation across all screens
-* Simulated AI workflows
-* Offline-friendly architecture
+```bash
+npm install
+```
 
----
+Start the development server
 
-# 🎯 Target Audience
+```bash
+npx expo start
+```
 
-* High school students
-* College and university students
-* Self-learners
-* Competitive exam aspirants
-* Lifelong learners
+Run on Android
 
----
+```bash
+npm run android
+```
 
-# 🛠️ Tech Stack
+Run on iOS
 
-* React Native
-* Expo
-* Expo Router
-* TypeScript
-* Local State Management
-* React Navigation
-* React Native Reanimated
-* React Native SVG
-* AsyncStorage
+```bash
+npm run ios
+```
+
+Run on Web
+
+```bash
+npx expo start --web
+```
 
 ---
 
-# 🚫 Current Scope
+# 🔥 Environment Variables
 
-This project intentionally excludes:
+Create a `.env` file.
 
-* Authentication
-* Backend services
-* Payment integration
-* External AI APIs
-* Cloud databases
-
-The focus is on delivering a polished frontend experience with future-ready architecture.
+```env
+EXPO_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
+EXPO_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+```
 
 ---
 
-# 🌟 Vision
+# 📊 App Highlights
 
-StudyPilot AI aims to become an intelligent academic companion that empowers students to plan smarter, study better, stay organized, and achieve their goals through a seamless and engaging learning experience.
+✅ AI Inspired Student Productivity
+
+✅ Beautiful Modern UI
+
+✅ Authentication System
+
+✅ Assignment Management
+
+✅ Smart Planner
+
+✅ Career Guidance
+
+✅ Performance Tracking
+
+✅ Mobile Responsive
+
+✅ Expo Router Navigation
+
+✅ TypeScript Support
+
+---
+
+# 📸 Screenshots
+
+> Add screenshots here after deployment.
+
+| Home | Planner | Study |
+|------|---------|--------|
+| 📷 | 📷 | 📷 |
+
+| Assignments | Career | Profile |
+|-------------|---------|----------|
+| 📷 | 📷 | 📷 |
+
+---
+
+# 🎯 Future Improvements
+
+- 🤖 AI Chat Tutor
+- 🎤 Voice Assistant
+- 📅 Google Calendar Integration
+- 🔔 Push Notifications
+- 🌙 Dark Mode
+- 📊 Advanced Analytics
+- 📄 PDF Notes
+- 📚 Flashcards
+- 🎥 Video Learning
+- ☁ Cloud Backup
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+
+2. Create your feature branch
+
+```bash
+git checkout -b feature/NewFeature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Added New Feature"
+```
+
+4. Push
+
+```bash
+git push origin feature/NewFeature
+```
+
+5. Open a Pull Request
+
+---
+
+# 📈 Project Status
+
+🟢 Active Development
+
+Regular improvements and new features are continuously being added.
+
+---
+
+# 💖 Acknowledgements
+
+- Expo Team
+- React Native Community
+- Supabase
+- Lucide Icons
+
+---
+
+<div align="center">
+
+## ⭐ If you like this project, consider giving it a Star!
+
+Made with ❤️ by **Arfa Munam**
+
+**Happy Learning! 🚀📚**
+
+</div>
